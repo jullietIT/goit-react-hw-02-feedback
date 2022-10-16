@@ -8,7 +8,7 @@ const theme = {
   colors: {
     black: 'black',
     white: 'white',
-    accent: 'green',
+    accent: 'orange',
   },
 };
 

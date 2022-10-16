@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-  Wrapper,
-  Button,
-  Title,
-  BlockButton,
-  BlockNumber,
-} from './Counter.styled.js';
+import { Wrapper } from './Counter.styled.js';
+import FeedbackOptions from 'components/FeedbackOptions/FeedbackOptions.jsx';
+import Statistics from '../Statistics/Statistics';
 
 class Counter extends React.Component {
   static defaultProps = {
@@ -15,7 +11,6 @@ class Counter extends React.Component {
     good: 0,
     neutral: 0,
     bad: 0,
-    // value: this.props.initialValue,
   };
 
   handleIncrementGood = () => {
@@ -36,38 +31,35 @@ class Counter extends React.Component {
     }));
   };
 
+  countTotalFeedback = () => {
+    this.setState(prevState => ({
+      TotalFeedback: prevState.bad + prevState.neutral + prevState.good,
+    }));
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    this.setState(prevState => ({
+      PositiveFeedbackPercentage:
+        (100 / this.handleIncrementTotal) * this.state.good,
+    }));
+  };
+
   render() {
     return (
       <Wrapper>
-        <Title>Please leave feedback</Title>
-        <BlockButton>
-          <Button type="button" onClick={this.handleIncrementGood}>
-            Good
-          </Button>
-          <Button type="button" onClick={this.handleIncrementNeutral}>
-            Neutral
-          </Button>
-          <Button type="button" onClick={this.handleIncrementBad}>
-            Bad
-          </Button>
-        </BlockButton>
-        <Title>Statistics</Title>
-        <BlockNumber>
-          <p> Good: </p>
-          <span>{this.state.good}</span>
-          <p> Neutral: </p>
-          <span>{this.state.neutral}</span>
-          <p> Bad:</p>
-          <span>{this.state.bad}</span>
-          <p> Total: </p>
-          <span>{this.state.bad + this.state.neutral + this.state.good}</span>
-          <p> Positive feedback: </p>
-          <span>
-            {(100 / (this.state.bad + this.state.neutral + this.state.good)) *
-              this.state.good}
-            %
-          </span>
-        </BlockNumber>
+        <FeedbackOptions
+          onClickGood={this.handleIncrementGood}
+          onClickNeutral={this.handleIncrementNeutral}
+          onClickBad={this.handleIncrementBad}
+        />
+
+        <Statistics
+          good={this.state.good}
+          neutral={this.state.neutral}
+          bad={this.state.bad}
+          TotalFeedback={this.state.TotalFeedback}
+          PositiveFeedbackPercentage={this.state.PositiveFeedbackPercentage}
+        />
       </Wrapper>
     );
   }

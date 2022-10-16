@@ -1,14 +1,22 @@
-// export const Statistics = () => {
-//   return (
-//     <div>
-//       <h2>Please leave feedback</h2>
-//       <div>
-//         <button>Good</button>
-//         <button>Neutral</button>
-//         <button>Bad</button>
-//       </div>
-//       <h2>Statistics</h2>
-//       <div></div>
-//     </div>
-//   );
-// };
+import React from 'react';
+import { Title, BlockNumber } from './Statistics.styled';
+
+const Statistics = ({
+  good,
+  neutral,
+  bad,
+  TotalFeedback,
+  PositiveFeedbackPercentage,
+}) => (
+  <div>
+    <Title>Statistics</Title>
+    <BlockNumber>
+      <p> Good:{good} </p>
+      <p> Neutral: {neutral}</p>
+      <p> Bad:{bad}</p>
+      <p> Total:{TotalFeedback} </p>
+      <p> Positive feedback:{PositiveFeedbackPercentage}% </p>
+    </BlockNumber>
+  </div>
+);
+export default Statistics;
