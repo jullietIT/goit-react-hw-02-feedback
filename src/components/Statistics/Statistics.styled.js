@@ -11,6 +11,7 @@ export const Title = styled.h2`
 export const BlockButton = styled.div`
   display: flex;
   justify-content: center;
+  position: absolute;
 `;
 
 export const Button = styled.button`

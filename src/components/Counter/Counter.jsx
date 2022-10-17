@@ -7,6 +7,7 @@ class Counter extends React.Component {
   static defaultProps = {
     initialValue: 0,
   };
+
   state = {
     good: 0,
     neutral: 0,
@@ -39,8 +40,9 @@ class Counter extends React.Component {
 
   countPositiveFeedbackPercentage = () => {
     this.setState(prevState => ({
-      PositiveFeedbackPercentage:
-        (100 / this.handleIncrementTotal) * this.state.good,
+      PositiveFeedbackPercentage: Math.round(
+        this.TotalFeedback ? (this.state.good / this.TotalFeedback) * 100 : 0
+      ),
     }));
   };
 
@@ -65,3 +67,9 @@ class Counter extends React.Component {
   }
 }
 export default Counter;
+
+// Profile. propTypes = {
+//     good: PropTypes.number.isRequired,
+//     neutral: PropTypes.number.isRequired,
+//     bad: PropTypes.number.isRequired,
+//   };
