@@ -1,7 +1,9 @@
 import React from 'react';
-import { Wrapper } from './Counter.styled.js';
 import FeedbackOptions from 'components/FeedbackOptions/FeedbackOptions.jsx';
 import Statistics from '../Statistics/Statistics';
+import { Wrapper } from './Counter.styled.js';
+
+// import PropTypes from 'prop-types';
 
 class Counter extends React.Component {
   static defaultProps = {
@@ -33,20 +35,17 @@ class Counter extends React.Component {
   };
 
   countTotalFeedback = () => {
-    this.setState(prevState => ({
-      TotalFeedback: prevState.bad + prevState.neutral + prevState.good,
-    }));
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
   };
 
   countPositiveFeedbackPercentage = () => {
-    this.setState(prevState => ({
-      PositiveFeedbackPercentage: Math.round(
-        this.TotalFeedback ? (this.state.good / this.TotalFeedback) * 100 : 0
-      ),
-    }));
+    const total = this.countTotalFeedback();
+    return total ? (this.state.good / total) * 100 : 0;
   };
-
   render() {
+    const total = this.countTotalFeedback();
+    const positive = this.countPositiveFeedbackPercentage();
     return (
       <Wrapper>
         <FeedbackOptions
@@ -54,22 +53,23 @@ class Counter extends React.Component {
           onClickNeutral={this.handleIncrementNeutral}
           onClickBad={this.handleIncrementBad}
         />
-
         <Statistics
           good={this.state.good}
           neutral={this.state.neutral}
           bad={this.state.bad}
-          TotalFeedback={this.state.TotalFeedback}
-          PositiveFeedbackPercentage={this.state.PositiveFeedbackPercentage}
+          TotalFeedback={total}
+          PositiveFeedbackPercentage={positive}
         />
       </Wrapper>
     );
   }
 }
-export default Counter;
 
-// Profile. propTypes = {
-//     good: PropTypes.number.isRequired,
-//     neutral: PropTypes.number.isRequired,
-//     bad: PropTypes.number.isRequired,
-//   };
+// Counter.propTypes = {
+//   good: PropTypes.number.isRequired,
+//   neutral: PropTypes.number.isRequired,
+//   bad: PropTypes.number.isRequired,
+//   TotalFeedback: PropTypes.number.isRequired,
+
+// };
+export default Counter;
