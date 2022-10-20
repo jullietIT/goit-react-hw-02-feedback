@@ -1,30 +1,16 @@
-// import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Message } from './NotificationMessage.styled';
 
-// import Statistics from 'components/Statistics/Statistics';
+export const Notification = ({ message }) => {
+  return (
+    <Message>
+      <p>{message}</p>
+    </Message>
+  );
+};
 
-// class NotificationMessage extends Component {
-//     state = {
-//       visible: false,
-//     };
-//     show = () => {
-//       this.setState({ visible: true });
-//     };
-
-//   render() {
-//     return (
-//       <div>
-//         <h2>There is no feedback</h2>
-//       </div>
-
-//     );
-
-//   this.state.visible && (   <Statistics
-//       good={this.state.good}
-//       neutral={this.state.neutral}
-//       bad={this.state.bad}
-//       TotalFeedback={this.state.TotalFeedback}
-//               PositiveFeedbackPercentage={this.state.PositiveFeedbackPercentage}
-
-//       }
-
-//     export default NotificationMessage;
+Notification.propTypes = {
+  message: PropTypes.string,
+};
+export default Notification;

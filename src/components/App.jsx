@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FeedbackOptions from 'components/FeedbackOptions/FeedbackOptions.jsx';
 import Statistics from './Statistics/Statistics';
+import Notification from './NotificationMessage/NotificationMessage';
 import { Wrapper } from './App.styled';
 
 class App extends Component {
@@ -31,16 +32,17 @@ class App extends Component {
       bad: prevState.bad + 1,
     }));
   };
-
+  // вспомогательные методы
   countTotalFeedback = () => {
     const { good, neutral, bad } = this.state;
     return good + neutral + bad;
   };
-
+  // вспомогательные методы
   countPositiveFeedbackPercentage = () => {
     const total = this.countTotalFeedback();
     return total ? (this.state.good / total) * 100 : 0;
   };
+
   render() {
     const total = this.countTotalFeedback();
     const positive = this.countPositiveFeedbackPercentage();
@@ -51,24 +53,19 @@ class App extends Component {
           onClickNeutral={this.handleIncrementNeutral}
           onClickBad={this.handleIncrementBad}
         />
-        <Statistics
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          TotalFeedback={total}
-          PositiveFeedbackPercentage={positive}
-        />
+
+        {total > 0 ? (
+          <Statistics
+            {...this.state}
+            TotalFeedback={total}
+            PositiveFeedbackPercentage={positive}
+          />
+        ) : (
+          <Notification message="There is no feedback" />
+        )}
       </Wrapper>
     );
   }
 }
 
-// Counter.propTypes = {
-//   good: PropTypes.number.isRequired,
-//   neutral: PropTypes.number.isRequired,
-//   bad: PropTypes.number.isRequired,
-//   TotalFeedback: PropTypes.number.isRequired,
-
-// };
-// export default Counter;
 export default App;
